@@ -1,2 +1,2 @@
-# pebble-test
-some tests for Pebble development
+# pebble-chatty
+a small client for Chatty, running on a Pebble smartwatch.
