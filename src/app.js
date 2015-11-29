@@ -47,6 +47,7 @@ function showBuildInfo() {
       var timestamp = data.timeStamp;
       var menu = new UI.Menu({
         sections: [{
+          title: 'Build Info',
           items: [{
             title: 'Version',
             subtitle: version
@@ -81,6 +82,7 @@ function showMessages() {
       }   
       
       var menu = new UI.Menu({
+        title: 'Chat Messages',
         sections: [{
           items: myItems
         }]
@@ -110,6 +112,7 @@ function showUsers() {
       }   
       
       var menu = new UI.Menu({
+        title: 'Users',
         sections: [{
           items: myItems
         }]
