@@ -1,60 +1,102 @@
 /**
- * Welcome to Pebble.js!
- *
- * This is where you write your app.
+ * This are just quick tests to get experience with Pebble.js
  */
 
 var UI = require('ui');
-var Vector2 = require('vector2');
+var ajax = require('ajax');
 
-var main = new UI.Card({
-  title: 'Pebble.js',
-  icon: 'images/menu_icon.png',
-  subtitle: 'Hello Kai!',
-  body: 'Press any button.'
+// Create a Card with title and subtitle
+var card = new UI.Card({
+  title:'Chatty',
+  subtitle:'Press right buttons...'
 });
 
-main.show();
+// Display the Card
+card.show();
 
-main.on('click', 'up', function(e) {
-  var menu = new UI.Menu({
-    sections: [{
-      items: [{
-        title: 'Pebble.js',
-        icon: 'images/menu_icon.png',
-        subtitle: 'Can do Menus'
-      }, {
-        title: 'Second Item',
-        subtitle: 'Subtitle Text'
-      }]
-    }]
-  });
-  menu.on('select', function(e) {
-    console.log('Selected item #' + e.itemIndex + ' of section #' + e.sectionIndex);
-    console.log('The item is titled "' + e.item.title + '"');
-  });
-  menu.show();
+card.on('click', 'up', function(e) {
+  ajax(
+    {
+      url: 'http://chatty-toedter.gigantic.io/api/buildinfo',
+      type: 'json'
+    },
+    function(data) {
+      var version = data.version;
+      var timestamp = data.timeStamp;
+      var menu = new UI.Menu({
+        sections: [{
+          items: [{
+            title: 'Version',
+            subtitle: version
+          }, {
+            title: 'Timestamp',
+            subtitle: timestamp
+          }]
+        }]
+      });
+      menu.show(); 
+    },
+    function(error) {
+      card.body('error getting Chatty buildinfo');
+    }
+  );
 });
 
-main.on('click', 'select', function(e) {
-  var wind = new UI.Window({
-    fullscreen: true,
-  });
-  var textfield = new UI.Text({
-    position: new Vector2(0, 65),
-    size: new Vector2(144, 30),
-    font: 'gothic-24-bold',
-    text: 'Text Anywhere!',
-    textAlign: 'center'
-  });
-  wind.add(textfield);
-  wind.show();
+card.on('click', 'select', function(e) {
+  ajax(
+    {
+      url: 'http://chatty-toedter.gigantic.io/api/messages?projection=excerpt',
+      type: 'json'
+    },
+    function(data) {
+      var messages = data._embedded['chatty:messages'];
+      var myItems = [];
+      
+      for (var i = 0; i < messages.length; i++) {
+        myItems[i] = {};
+        myItems[i].title = messages[i].author.id;
+        myItems[i].subtitle = messages[i].text;
+      }   
+      
+      var menu = new UI.Menu({
+        sections: [{
+          items: myItems
+        }]
+      });
+      menu.show(); 
+    },
+    function(error) {
+      card.body('error getting Chatty messages');
+    }
+  );
 });
 
-main.on('click', 'down', function(e) {
-  var card = new UI.Card();
-  card.title('A Card');
-  card.subtitle('Is a Window');
-  card.body('The simplest window type in Pebble.js.');
-  card.show();
+card.on('click', 'down', function(e) {
+  ajax(
+    {
+      url: 'http://chatty-toedter.gigantic.io/api/users',
+      type: 'json'
+    },
+    function(data) {
+      var users = data._embedded['chatty:users'];
+      var myItems = [];
+      
+      for (var i = 0; i < users.length; i++) {
+        myItems[i] = {};
+        myItems[i].title = users[i].fullName;
+        myItems[i].subtitle = users[i].email;
+      }   
+      
+      var menu = new UI.Menu({
+        sections: [{
+          items: myItems
+        }]
+      });
+      menu.show(); 
+    },
+    function(error) {
+      card.body('error getting Chatty users');
+    }
+  );
 });
+

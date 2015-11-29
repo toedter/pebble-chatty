@@ -4,7 +4,7 @@
         ""
     ],
     "companyName": "kai@toedter.com",
-    "longName": "pebble-js-test",
+    "longName": "pebble-chatty",
     "projectType": "pebblejs",
     "resources": {
         "media": [
@@ -32,7 +32,7 @@
         ]
     },
     "sdkVersion": "3",
-    "shortName": "pebble-js-test",
+    "shortName": "pebble-chatty",
     "targetPlatforms": [
         "aplite",
         "basalt"
