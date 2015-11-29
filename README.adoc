@@ -1,6 +1,6 @@
 = pebble-chatty
 
-a small client for link:https://github.com/toedter/chatty[Chatty] , running on a Pebble smartwatch.
+a small client for link:https://github.com/toedter/chatty[Chatty], running on a Pebble smartwatch.
 
 image:images/chatty-pebble-1.png[]
 image:images/chatty-pebble-2.png[]
