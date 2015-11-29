@@ -1,20 +1,42 @@
 /**
- * This are just quick tests to get experience with Pebble.js
+ * This little Pebble app accesses the Chatty application,
+ * see https://github.com/toedter/chatty
  */
 
 var UI = require('ui');
 var ajax = require('ajax');
 
-// Create a Card with title and subtitle
-var card = new UI.Card({
-  title:'Chatty',
-  subtitle:'Press right buttons...'
+var mainMenu = new UI.Menu({
+  sections: [{
+    title: 'Chatty',
+    items: [{
+       title: 'Messages'
+    },{
+       title: 'Users'
+    },{
+       title: 'Version'
+    }]
+  }]
+});
+  
+mainMenu.show();
+
+mainMenu.on('select', function(e) {
+  console.log('Selected item #' + e.itemIndex + ' of section #' + e.sectionIndex);
+  console.log('The item is titled "' + e.item.title + '"');
+  switch(e.itemIndex) {
+    case 0:
+        showMessages();
+        break;
+    case 1:
+        showUsers();
+        break;
+    default:
+        showBuildInfo();
+  } 
 });
 
-// Display the Card
-card.show();
-
-card.on('click', 'up', function(e) {
+function showBuildInfo() {
   ajax(
     {
       url: 'http://chatty-toedter.gigantic.io/api/buildinfo',
@@ -37,12 +59,12 @@ card.on('click', 'up', function(e) {
       menu.show(); 
     },
     function(error) {
-      card.body('error getting Chatty buildinfo');
+      console.log('error getting Chatty buildinfo');
     }
   );
-});
+}
 
-card.on('click', 'select', function(e) {
+function showMessages() {
   ajax(
     {
       url: 'http://chatty-toedter.gigantic.io/api/messages?projection=excerpt',
@@ -66,12 +88,12 @@ card.on('click', 'select', function(e) {
       menu.show(); 
     },
     function(error) {
-      card.body('error getting Chatty messages');
+      console.log('error getting Chatty messages');
     }
   );
-});
+}
 
-card.on('click', 'down', function(e) {
+function showUsers() {
   ajax(
     {
       url: 'http://chatty-toedter.gigantic.io/api/users',
@@ -95,8 +117,8 @@ card.on('click', 'down', function(e) {
       menu.show(); 
     },
     function(error) {
-      card.body('error getting Chatty users');
+      console.log('error getting Chatty users');
     }
   );
-});
+}
 
