@@ -1,5 +1,5 @@
 /**
- * This little Pebble app accesses the Chatty application,
+ * This little Pebble app accesses the Chatty RESTful web service,
  * see https://github.com/toedter/chatty
  */
 
@@ -22,8 +22,6 @@ var mainMenu = new UI.Menu({
 mainMenu.show();
 
 mainMenu.on('select', function(e) {
-  console.log('Selected item #' + e.itemIndex + ' of section #' + e.sectionIndex);
-  console.log('The item is titled "' + e.item.title + '"');
   switch(e.itemIndex) {
     case 0:
         showMessages();
@@ -43,17 +41,15 @@ function showBuildInfo() {
       type: 'json'
     },
     function(data) {
-      var version = data.version;
-      var timestamp = data.timeStamp;
       var menu = new UI.Menu({
         sections: [{
           title: 'Build Info',
           items: [{
             title: 'Version',
-            subtitle: version
+            subtitle: data.version
           }, {
             title: 'Timestamp',
-            subtitle: timestamp
+            subtitle: data.timeStamp
           }]
         }]
       });
