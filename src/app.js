@@ -26,26 +26,41 @@ var mainMenu = new UI.Menu({
 mainMenu.show();
 
 mainMenu.on('select', function (e) {
-    switch (e.itemIndex) {
-        case 0:
-            showMessages();
-            break;
-        case 1:
-            showUsers();
-            break;
-        default:
-            showBuildInfo();
-    }
-});
-
-function showBuildInfo() {
     ajax(
         {
-            url: 'http://chatty-toedter.gigantic.io/api/buildinfo',
+            url: 'http://chatty-toedter.gigantic.io/api',
+            type: 'json'
+        },
+        function (data) {
+            switch (e.itemIndex) {
+                case 0:
+                    showMessages(data._links['chatty:messages'].href.replace(/{.*}/g, ''));
+                    break;
+                case 1:
+                    showUsers(data._links['chatty:users'].href.replace(/{.*}/g, ''));
+                    break;
+                default:
+                    showBuildInfo(data._links['chatty:buildinfo'].href);
+            }
+        },
+        function (error) {
+            showError('cannot get Chatty API');
+        }
+    );
+});
+
+function showBuildInfo(uri) {
+    ajax(
+        {
+            url: uri,
             type: 'json'
         },
         function (data) {
             var menu = new UI.Menu({
+                backgroundColor: 'white',
+                textColor: 'black',
+                highlightBackgroundColor: 'green',
+                highlightTextColor: 'black',
                 sections: [{
                     title: 'Build Info',
                     items: [{
@@ -60,15 +75,15 @@ function showBuildInfo() {
             menu.show();
         },
         function (error) {
-            console.log('error getting Chatty buildinfo');
+            showError('cannot get build info');
         }
     );
 }
 
-function showMessages() {
+function showMessages(uri) {
     ajax(
         {
-            url: 'http://chatty-toedter.gigantic.io/api/messages?projection=excerpt',
+            url: uri + '?projection=excerpt',
             type: 'json'
         },
         function (data) {
@@ -82,6 +97,10 @@ function showMessages() {
             }
 
             var menu = new UI.Menu({
+                backgroundColor: 'white',
+                textColor: 'red',
+                highlightBackgroundColor: 'red',
+                highlightTextColor: 'yellow',
                 sections: [{
                     title: 'Chat Messages',
                     items: myItems
@@ -90,15 +109,15 @@ function showMessages() {
             menu.show();
         },
         function (error) {
-            console.log('error getting Chatty messages');
+            showError('cannot get messages');
         }
     );
 }
 
-function showUsers() {
+function showUsers(uri) {
     ajax(
         {
-            url: 'http://chatty-toedter.gigantic.io/api/users',
+            url: uri,
             type: 'json'
         },
         function (data) {
@@ -112,6 +131,10 @@ function showUsers() {
             }
 
             var menu = new UI.Menu({
+                backgroundColor: 'white',
+                textColor: 'blue',
+                highlightBackgroundColor: 'blue',
+                highlightTextColor: 'yellow',
                 sections: [{
                     title: 'Users',
                     items: myItems
@@ -120,8 +143,16 @@ function showUsers() {
             menu.show();
         },
         function (error) {
-            console.log('error getting Chatty users');
+            showError('cannot get users');
         }
     );
+}
+
+function showError(text) {
+    var errorCard = new UI.Card({
+        title:'Error',
+        body:text
+    });
+    errorCard.show();
 }
 
