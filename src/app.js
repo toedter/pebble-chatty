@@ -82,8 +82,8 @@ function showMessages() {
             }
 
             var menu = new UI.Menu({
-                title: 'Chat Messages',
                 sections: [{
+                    title: 'Chat Messages',
                     items: myItems
                 }]
             });
@@ -112,8 +112,8 @@ function showUsers() {
             }
 
             var menu = new UI.Menu({
-                title: 'Users',
                 sections: [{
+                    title: 'Users',
                     items: myItems
                 }]
             });
