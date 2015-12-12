@@ -28,7 +28,7 @@ mainMenu.show();
 mainMenu.on('select', function (e) {
     ajax(
         {
-            url: 'http://chatty-toedter.gigantic.io/api',
+            url: 'http://chatty-toedter.leaseweb-alpha.giantswarm.io/api',
             type: 'json'
         },
         function (data) {
