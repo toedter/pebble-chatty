@@ -2,7 +2,7 @@
  * This little Pebble app accesses the Chatty RESTful web service,
  * see https://github.com/toedter/chatty
  *
- * Copyright (c) 2014 Kai Toedter
+ * Copyright (c) 2016 Kai Toedter
  * All rights reserved.
  * Licensed under MIT License, see http://toedter.mit-license.org/
 */
@@ -28,7 +28,7 @@ mainMenu.show();
 mainMenu.on('select', function (e) {
     ajax(
         {
-            url: 'http://chatty-toedter.leaseweb-alpha.giantswarm.io/api',
+            url: 'https://chatty42.herokuapp.com/api',
             type: 'json'
         },
         function (data) {

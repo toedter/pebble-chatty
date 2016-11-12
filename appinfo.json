@@ -10,24 +10,29 @@
         "media": [
             {
                 "file": "images/menu_icon.png",
-                "menuIcon": true,
                 "name": "IMAGE_MENU_ICON",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/logo_splash.png",
                 "name": "IMAGE_LOGO_SPLASH",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/tile_splash.png",
                 "name": "IMAGE_TILE_SPLASH",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "fonts/UbuntuMono-Regular.ttf",
                 "name": "MONO_FONT_14",
                 "type": "font"
+            },
+            {
+                "file": "images/pebble-chatty-menu.bmp",
+                "menuIcon": true,
+                "name": "IMAGES_PEBBLE_CHATTY_MENU_BMP",
+                "type": "bitmap"
             }
         ]
     },
@@ -39,7 +44,7 @@
     ],
     "uuid": "5d589edc-4cc8-42bc-b708-4bec39ece632",
     "versionCode": 1,
-    "versionLabel": "0.2",
+    "versionLabel": "0.4",
     "watchapp": {
         "hiddenApp": false,
         "watchface": false
